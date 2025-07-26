@@ -18,6 +18,7 @@
 import telebot
 import asyncio
 import vt
+
 TOKEN = "8455216093:AAEwv31E-bpv995VnijQEn3mA0p4qyNCNTc"
 VT_API_KEY = "2775f96a0b71e785e6fafaa2e64e481f2662580b66a23a14c99210420b77dd6b"
 bot = telebot.TeleBot(TOKEN)
@@ -105,6 +106,18 @@ def send_welcome(message):
         "أرسل أي رابط (يبدأ بـ http أو https) وسأقوم بفحصه عبر VirusTotal وأخبرك إذا كان آمنًا أو مشبوهًا."
     )
 
+from flask import Flask
+import threading
 
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "SafeLinker Bot is running!"
+
+def run_web():
+    app.run(host='0.0.0.0', port=10000)
+
+threading.Thread(target=run_web).start()
 # ======= تشغيل البوت =======
 bot.polling(none_stop=True)
